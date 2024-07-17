@@ -1,0 +1,11 @@
+{
+  "DATABASE_LOCAL_HOST": "localhost",
+  "DATABASE_LOCAL_PORT": 5433,
+  "DATABASE_NAME": "battlecard",
+  "DATABASE_USER": "root",
+  "DATABASE_PASSWORD": "secret",
+  "DATABASE_COMPOSE_HOST": "battle_card-db",
+  "DATABASE_DEFAULT_PORT": 5432,
+  "API_DEFAULT_PORT": 4000,
+  "API_COMPOSE_PORT": 4001
+}

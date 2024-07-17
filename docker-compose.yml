@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  battle_card-db:
+    image: postgres:16
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - ${DATABASE_LOCAL_PORT}:${DATABASE_DEFAULT_PORT}
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  battle_card-api:
+    build: ./
+    restart: always
+    ports:
+      - ${API_COMPOSE_PORT}:${API_DEFAULT_PORT}
+    env_file:
+      - .env
+    environment:
+      DATABASE_LOCAL_HOST: ${DATABASE_COMPOSE_HOST}
+      DATABASE_LOCAL_PORT: ${DATABASE_DEFAULT_PORT}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_NAME: ${DATABASE_NAME}
+    depends_on:
+      - battle_card-db
+
+volumes:
+  dbdata:
+
+networks:
+  default:
+    name: network-test
