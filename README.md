@@ -111,8 +111,7 @@ By default, this application runs on port 4000 and is configured to connect to t
 ## Architecture
 
 The API follows a hexagonal architecture composed of:
-**Domain**: The core of the application where the business logic and main entities are defined.
-
+- **Domain**: The core of the application where the business logic and main entities are defined.
 - **Adapters**: This layer handles the input and output of the application, including HTTP controllers, database repositories, and validation schemas for HTTP request inputs.
 - **Use-Cases**: This layer defines the application logic that orchestrates the domain operations, using the entities and services defined in the domain.
 
