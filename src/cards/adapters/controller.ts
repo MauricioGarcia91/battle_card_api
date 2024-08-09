@@ -54,7 +54,7 @@ export class CardController {
         throw new BadRequestError(JSON.stringify(error));
       }
 
-      const cardUpdated = await this.cardUseCases.update(id, data);
+      const cardUpdated = await this.cardUseCases.update(id, data as CardInput);
 
       res.status(200).json(cardUpdated);
     } catch (err) {
