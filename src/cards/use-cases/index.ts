@@ -53,7 +53,7 @@ export class CardUseCases {
     }
   };
 
-  update = async (cardId: string, input: any) => {
+  update = async (cardId: string, input: CardInput) => {
     try {
       const card = new Card();
       Object.assign(card, input);
