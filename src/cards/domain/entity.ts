@@ -7,7 +7,7 @@ import {
   JoinColumn
 } from 'typeorm';
 
-import { CardType } from '../../card-types/domain/entity';
+import { CardType } from '@/card-types/domain/entity';
 
 @Entity('card')
 export class Card {

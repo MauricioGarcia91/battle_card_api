@@ -1,3 +1,16 @@
+export interface CardInput {
+  name: string;
+  hp: number;
+  ability: string;
+  attack_power: number;
+  resistance_point: number;
+  weakness_point: number;
+  img_url: string;
+  resistance: string;
+  weakness: string;
+  type: string;
+}
+
 export interface SearchCardsParams {
   q?: string;
   limit?: string;

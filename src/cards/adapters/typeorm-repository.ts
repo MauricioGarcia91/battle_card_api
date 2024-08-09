@@ -1,11 +1,11 @@
 import { ILike, Repository } from 'typeorm';
 
-import { Repository as ICardRepository } from '../domain/repository';
+import { CardRepository } from '../domain/repository';
 import { Card } from '../domain/entity';
 
 import { SearchCardsParams } from '../domain/definitions.d';
 
-export class TypeOrmRepository implements ICardRepository {
+export class TypeOrmRepository implements CardRepository {
   private repository: Repository<Card>;
 
   constructor(repository: Repository<Card>) {

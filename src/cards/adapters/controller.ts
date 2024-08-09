@@ -1,13 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
-import { UseCases } from '../use-cases';
-import { Validator } from '../../shared/validator';
+import { CardUseCases } from '../use-cases';
+import { Validator } from '@/shared/validator';
+import { BadRequestError } from '@/shared/errors';
 
-export class Controller {
-  private useCases: UseCases;
-  private validator: Validator;
+import { CardInput } from '../domain/definitions.d';
 
-  constructor(useCases: UseCases, validator: Validator) {
-    this.useCases = useCases;
+export class CardController {
+  constructor(
+    private cardUseCases: CardUseCases,
+    private validator: Validator
+  ) {
+    this.cardUseCases = cardUseCases;
     this.validator = validator;
   }
 
@@ -17,10 +20,10 @@ export class Controller {
       const { data, error } = await this.validator.validateSchema(input);
 
       if (error) {
-        return res.status(400).json({ error });
+        throw new BadRequestError(JSON.stringify(error));
       }
 
-      const card = await this.useCases.create(data);
+      const card = await this.cardUseCases.create(data as CardInput);
 
       res.status(201).json(card);
     } catch (err) {
@@ -32,7 +35,7 @@ export class Controller {
     try {
       const { id } = req.params;
 
-      const card = await this.useCases.getById(id);
+      const card = await this.cardUseCases.getById(id);
 
       res.status(200).json(card);
     } catch (err) {
@@ -48,10 +51,10 @@ export class Controller {
       const { data, error } = await this.validator.validatePartialSchema(input);
 
       if (error) {
-        return res.status(400).json(error);
+        throw new BadRequestError(JSON.stringify(error));
       }
 
-      const cardUpdated = await this.useCases.update(id, data);
+      const cardUpdated = await this.cardUseCases.update(id, data);
 
       res.status(200).json(cardUpdated);
     } catch (err) {
@@ -63,7 +66,7 @@ export class Controller {
     try {
       const { id } = req.params;
 
-      const cardRemoved = await this.useCases.delete(id);
+      const cardRemoved = await this.cardUseCases.delete(id);
 
       res.status(200).json(cardRemoved);
     } catch (err) {
@@ -78,7 +81,7 @@ export class Controller {
         string
       >;
 
-      const cards = await this.useCases.search({
+      const cards = await this.cardUseCases.search({
         q,
         limit,
         card_type,
@@ -96,7 +99,7 @@ export class Controller {
     try {
       const { attacker_id, defender_id } = req.body;
 
-      const result = await this.useCases.simulateBattle({
+      const result = await this.cardUseCases.simulateBattle({
         attacker_id,
         defender_id
       });

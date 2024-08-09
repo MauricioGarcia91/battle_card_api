@@ -3,7 +3,7 @@
   "info": {
     "title": "Battle Card API",
     "version": "1.0.0",
-    "description": "Challenge for Cook-Unity"
+    "description": "This api provide several feature for cards game"
   },
   "servers": [
     {

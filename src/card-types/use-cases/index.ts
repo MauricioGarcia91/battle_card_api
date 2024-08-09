@@ -1,17 +1,23 @@
-import { Repository } from '../domain/repository';
+import { CardTypeRepository } from '../domain/repository';
 
-export class UseCases {
-  private repository: Repository;
-
-  constructor(repository: Repository) {
-    this.repository = repository;
+export class CardTypeUseCases {
+  constructor(private cardTypeRepository: CardTypeRepository) {
+    this.cardTypeRepository = cardTypeRepository;
   }
 
   search = async () => {
     try {
-      return await this.repository.search();
+      return await this.cardTypeRepository.search();
     } catch (err) {
-      throw `[CARD_TYPES-USECASES] [search] ${err}`;
+      throw `[CARD_TYPE-USECASES] [search] ${err}`;
+    }
+  };
+
+  getById = async (cardTypeId: string) => {
+    try {
+      return await this.cardTypeRepository.getById(cardTypeId);
+    } catch (err) {
+      throw `[CARD_TYPE-USECASES] [getById] ${err}`;
     }
   };
 }

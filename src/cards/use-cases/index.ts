@@ -1,27 +1,47 @@
-import { Repository } from '../domain/repository';
+import { CardRepository } from '../domain/repository';
 import { Card } from '../domain/entity';
+
+import { CardTypeUseCases } from '@/card-types/use-cases';
 
 import {
   BattleParams,
   BattleResult,
+  CardInput,
   SearchCardsParams
-} from '../domain/definitions.d';
+} from '@/cards/domain/definitions.d';
 
-export class UseCases {
-  private repository: Repository;
-
-  constructor(repository: Repository) {
+import { CustomError, NotFoundError } from '@/shared/errors';
+export class CardUseCases {
+  constructor(
+    private repository: CardRepository,
+    private cardTypeUseCases: CardTypeUseCases
+  ) {
     this.repository = repository;
+    this.cardTypeUseCases = cardTypeUseCases;
   }
 
-  create = async (input: any) => {
+  create = async (input: CardInput) => {
     try {
+      const [type, weakness, resistance] = await Promise.all([
+        this.cardTypeUseCases.getById(input.type),
+        this.cardTypeUseCases.getById(input.weakness),
+        this.cardTypeUseCases.getById(input.resistance)
+      ]);
+
+      if (!type || !weakness || !resistance) {
+        throw new NotFoundError('Some card type not found');
+      }
+
       const card = new Card();
       Object.assign(card, input);
 
       return await this.repository.create(card);
     } catch (err) {
-      throw `[CARDS-USECASES] [create] ${err}`;
+      if (err instanceof NotFoundError) {
+        throw err;
+      }
+
+      throw new CustomError(500, `[CARDS-USECASES] [create] ${err}`);
     }
   };
 
@@ -71,7 +91,7 @@ export class UseCases {
       ]);
 
       if (!attacker || !defender) {
-        throw new Error('Any card was not found');
+        throw new NotFoundError('Some card not found');
       }
 
       let damage = attacker.attack_power;
@@ -95,7 +115,11 @@ export class UseCases {
         win
       };
     } catch (err) {
-      throw `[CARDS-USECASES] [simulateBattle] ${err}`;
+      if (err instanceof NotFoundError) {
+        throw err;
+      }
+
+      throw new CustomError(500, `[CARDS-USECASES] [simulateBattle] ${err}`);
     }
   };
 }

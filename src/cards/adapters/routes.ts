@@ -1,30 +1,25 @@
 import express from 'express';
-import { AppDataSource } from '../../data-source';
-import { Card } from '../domain/entity';
-import { UseCases } from '../use-cases';
 import { CardSchema } from './schema';
-import { Controller } from './controller';
-import { TypeOrmRepository } from './typeorm-repository';
-import { Validator } from '../../shared/validator';
+import { CardController } from './controller';
 
-const typeOrmRepository = AppDataSource.getRepository(Card);
-const cardRepository = new TypeOrmRepository(typeOrmRepository);
+import { cardUseCases } from './container-di';
 
-const useCases = new UseCases(cardRepository);
+import { Validator } from '@/shared/validator';
+
 const validator = new Validator(CardSchema);
 
-const controller = new Controller(useCases, validator);
+const cardController = new CardController(cardUseCases, validator);
 
 export const router = express.Router();
 
-router.post('/', controller.create);
+router.post('/', cardController.create);
 
-router.get('/', controller.search);
+router.get('/', cardController.search);
 
-router.get('/:id', controller.getById);
+router.get('/:id', cardController.getById);
 
-router.put('/:id', controller.update);
+router.put('/:id', cardController.update);
 
-router.delete('/:id', controller.delete);
+router.delete('/:id', cardController.delete);
 
-router.post('/battle', controller.simulateBattle);
+router.post('/battle', cardController.simulateBattle);

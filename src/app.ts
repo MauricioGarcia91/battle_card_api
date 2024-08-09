@@ -1,5 +1,6 @@
 import { initializeDataSource } from './data-source';
 import { initializeServer } from './server';
+import 'reflect-metadata';
 
 async function initApp() {
   try {

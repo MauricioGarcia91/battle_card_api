@@ -1,17 +1,10 @@
 import express from 'express';
 
-import { AppDataSource } from '../../data-source';
-import { Controller } from './controller';
-import { TypeOrmRepository } from './typeorm-repository';
+import { CardTypeController } from './controller';
+import { cardTypeUseCases } from './container-di';
 
-import { CardType } from '../domain/entity';
-import { UseCases } from '../use-cases';
-
-const typeOrmRepository = AppDataSource.getRepository(CardType);
-const cardTypeRepository = new TypeOrmRepository(typeOrmRepository);
-const useCases = new UseCases(cardTypeRepository);
-const controller = new Controller(useCases);
+const cardTypeController = new CardTypeController(cardTypeUseCases);
 
 export const router = express.Router();
 
-router.get('/', controller.search);
+router.get('/', cardTypeController.search);
