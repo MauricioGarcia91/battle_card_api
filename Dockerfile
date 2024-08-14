@@ -16,6 +16,7 @@ COPY ./swagger.json ./swagger.json
 
 # Install node packages, build the app, and remove tsc code from src folder
 RUN npm install \
+    && npm run load-dev-env \
     && npm run build \
     && rm -fr src
 

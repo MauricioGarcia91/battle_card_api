@@ -16,7 +16,7 @@ export class TypeOrmRepository implements CardRepository {
     try {
       return await this.repository.save(card);
     } catch (err) {
-      throw `[CARDS-REPOSITORY] [create] ${err}`;
+      throw `[CARD-REPOSITORY] [create] ${err}`;
     }
   };
 
@@ -31,7 +31,7 @@ export class TypeOrmRepository implements CardRepository {
         }
       });
     } catch (err) {
-      throw `[CARDS-REPOSITORY] [getById] ${err}`;
+      throw `[CARD-REPOSITORY] [getById] ${err}`;
     }
   };
 
@@ -49,7 +49,7 @@ export class TypeOrmRepository implements CardRepository {
 
       return await this.repository.save(cardToUpdate);
     } catch (err) {
-      throw `[CARDS-REPOSITORY] [update] ${err}`;
+      throw `[CARD-REPOSITORY] [update] ${err}`;
     }
   };
 
@@ -65,7 +65,7 @@ export class TypeOrmRepository implements CardRepository {
 
       return await this.repository.remove(cardToRemove);
     } catch (err) {
-      throw `[CARDS-REPOSITORY] [delete] ${err}`;
+      throw `[CARD-REPOSITORY] [delete] ${err}`;
     }
   };
 
@@ -107,7 +107,7 @@ export class TypeOrmRepository implements CardRepository {
         }
       });
     } catch (err) {
-      throw `[CARDS-REPOSITORY] [search] ${err}`;
+      throw `[CARD-REPOSITORY] [search] ${err}`;
     }
   };
 }

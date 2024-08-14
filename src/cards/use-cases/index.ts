@@ -41,7 +41,7 @@ export class CardUseCases {
         throw err;
       }
 
-      throw new CustomError(500, `[CARDS-USECASES] [create] ${err}`);
+      throw new CustomError(500, `[CARD-USECASES] [create] ${err}`);
     }
   };
 
@@ -49,7 +49,7 @@ export class CardUseCases {
     try {
       return await this.repository.getById(cardId);
     } catch (err) {
-      throw `[CARDS-USECASES] [getById] ${err}`;
+      throw `[CARD-USECASES] [getById] ${err}`;
     }
   };
 
@@ -60,7 +60,7 @@ export class CardUseCases {
 
       return await this.repository.update(cardId, card);
     } catch (err) {
-      throw `[CARDS-USECASES] [update] ${err}`;
+      throw `[CARD-USECASES] [update] ${err}`;
     }
   };
 
@@ -68,7 +68,7 @@ export class CardUseCases {
     try {
       return await this.repository.delete(cardId);
     } catch (err) {
-      throw `[CARDS-USECASES] [delete] ${err}`;
+      throw `[CARD-USECASES] [delete] ${err}`;
     }
   };
 
@@ -76,7 +76,7 @@ export class CardUseCases {
     try {
       return await this.repository.search(params);
     } catch (err) {
-      throw `[CARDS-USECASES] [search] ${err}`;
+      throw `[CARD-USECASES] [search] ${err}`;
     }
   };
 
@@ -119,7 +119,7 @@ export class CardUseCases {
         throw err;
       }
 
-      throw new CustomError(500, `[CARDS-USECASES] [simulateBattle] ${err}`);
+      throw new CustomError(500, `[CARD-USECASES] [simulateBattle] ${err}`);
     }
   };
 }
